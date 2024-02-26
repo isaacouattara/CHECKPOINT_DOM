@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+        }
+    
+        h1 {
+          text-align: center;
+          color: #333;
+        }
+    
+        #items {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+    
+        .item {
+          border: 1px solid #ddd;
+          padding: 10px;
+          width: 25%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+    
+        .quantity-btn {
+          background-color: #4CAF50;
+          color: #fff;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+          border-radius: 3px;
+        }
+    
+        .quantity {
+          margin: 0 10px;
+          font-weight: bold;
+        }
+    
+        button {
+          background-color: #f44336;
+          color: #fff;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+          border-radius: 3px;
+        }
+    
+        .heart-btn {
+          cursor: pointer;
+          color: gray;
+          font-size: 20px;
+        }
+    
+        .liked {
+          color: red;
+        }
+    
+        #total {
+          margin-top: 20px;
+          font-size: 18px;
+        }
+      </style>
+    <title>Panier d'Achat</title>
+</head>
+
+<body>
+
+    <h1>Panier d'Achat</h1>
+
+    <div id="items">
+        <div class="item" data-price="10.00">
+            <span>article 1</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, -1)">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, 1)">+</button>
+            <button onclick="removeItem(this)">Supprimer</button>
+            <span class="heart-btn" onclick="toggleLike(this)">❤</span>
+        </div>
+        <div class="item" data-price="15.00">
+            <span>article 2</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, -1)">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, 1)">+</button>
+            <button onclick="removeItem(this)">Supprimer</button>
+            <span class="heart-btn" onclick="toggleLike(this)">❤</span>
+        </div>
+        <div class="item" data-price="30.00">
+            <span>article 3</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, -1)">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, 1)">+</button>
+            <button onclick="removeItem(this)">Supprimer</button>
+            <span class="heart-btn" onclick="toggleLike(this)">❤</span>
+        </div>
+        <div class="item" data-price="5.00">
+            <span>article 4</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, -1)">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, 1)">+</button>
+            <button onclick="removeItem(this)">Supprimer</button>
+            <span class="heart-btn" onclick="toggleLike(this)">❤</span>
+        </div>
+        <div class="item" data-price="100.00">
+            <span>article 5</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, -1)">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, 1)">+</button>
+            <button onclick="removeItem(this)">Supprimer</button>
+            <span class="heart-btn" onclick="toggleLike(this)">❤</span>
+        </div>
+        <div class="item" data-price="100.00">
+            <span>article 6</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, -1)">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" onclick="adjustQuantity(this, 1)">+</button>
+            <button onclick="removeItem(this)">Supprimer</button>
+            <span class="heart-btn" onclick="toggleLike(this)">❤</span>
+        </div>
+
+
+    </div>
+
+    <div id="total">Total: 0.00FCFA</div>
+
+    <script>
+        let totalAmount = 0;
+
+        function adjustQuantity(btn, amount) {
+            const quantityElement = btn.parentNode.querySelector('.quantity');
+            let quantity = parseInt(quantityElement.textContent);
+            quantity += amount;
+
+            if (quantity < 0) {
+                quantity = 0;
+            }
+
+            quantityElement.textContent = quantity;
+            updateTotal();
+        }
+
+        function removeItem(btn) {
+            const item = btn.parentNode;
+            item.parentNode.removeChild(item);
+            updateTotal();
+        }
+
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+        }
+
+        function updateTotal() {
+            const quantityElements = document.querySelectorAll('.quantity');
+            const totalElement = document.getElementById('total');
+
+            totalAmount = 0;
+
+            quantityElements.forEach((quantityElement, index) => {
+                const quantity = parseInt(quantityElement.textContent);
+                const price = parseFloat(quantityElement.closest('.item').getAttribute('data-price'));
+                totalAmount += quantity * price;
+            });
+
+            totalElement.textContent = `Total: ${totalAmount.toFixed(2)}FCFA`;
+        }
+    </script>
+
+</body>
+
+</html>
+
+
